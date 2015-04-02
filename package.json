@@ -8,7 +8,8 @@
     "mongodb": "^1.4.35",
     "mongoskin": "^1.4.13",
     "socket.io": "^1.2.0",
-    "twilio": "^1.7.0"
+    "twilio": "^1.7.0",
+    "twitter": "^1.2.5"
   },
   "devDependencies": {
     "dotenv": "^1.1.0"

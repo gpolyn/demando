@@ -5,9 +5,17 @@ var path = require('path');
 var express = require('express');
 var twilio = require('twilio');
 var bodyParser = require('body-parser');
+var Twitter = require('twitter');
 require('dotenv').load();
  
 var smss = db.collection('smss');
+var tweets = db.collection('tweets');
+var twitterClient = new Twitter({
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token_key: process.env.ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
+});
 
 // Create Express app and HTTP server, and configure socket.io
 var app = express();
@@ -51,6 +59,32 @@ app.post('/twilio', function(request, response) {
     
     response.type('text/xml');
     response.send(twiml.toString());
+});
+
+twitterClient.stream('statuses/filter', {track: 'pricelets'}, function(stream) {
+  stream.on('data', function(tweet) {
+    console.log(tweet.text);
+    // console.log(tweet.user.screen_name);
+     // console.log(tweet);
+     console.log(tweet.entities.media);
+    // var url = tweet.text.substr(tweet.text.indexOf("http"),tweet.text.length);
+    // var url = "twitter.com/"+tweet.user.screen_name+"/statuses/"+tweet.id_str;
+    // console.log("url is "+url);
+    tweets.insert(tweet, function(err, result) {
+        if(err) {
+          // util.puts('Error! Could not save mailRaw. ' + err.reason);
+          console.log('Error! Could not save mailRaw. ' + err);
+        } else {
+          io.emit('newMedia', tweet.entities.media[0].media_url);
+          console.log("persisted in mongo!");
+          console.log(result);
+        }
+    });
+  });
+
+  stream.on('error', function(error) {
+    throw error;
+  });
 });
  
 io.on('connection', function(socket){                                            
