@@ -43,6 +43,7 @@ app.post('/twilio', function(request, response) {
                 console.log(result);
             });
             io.emit('newMedia', mediaUrl);
+            io.emit('news', body); 
         }
         twiml.message('Photo received - check the screen to see it pop up!');
     } else {
@@ -51,6 +52,10 @@ app.post('/twilio', function(request, response) {
     
     response.type('text/xml');
     response.send(twiml.toString());
+});
+
+app.get('/crap', function (req, res) {
+  res.sendFile(__dirname + '/index.html');
 });
  
 io.on('connection', function(socket){                                            

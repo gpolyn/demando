@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>Real Time Demando Stream</title>
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <!-- <link rel="stylesheet" href="/photobox/photobox.css"> -->
+    <style>
+    </style>
+  </head>
+  <body>
+    <div id='media_urls'>
+        <h1>Send a MMS to start the stream.</h1>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      function createImage(url) {
+        var markup = '<div>'+url+'</div>';
+          return markup;
+      }       
+
+      function startGallery() {
+         $('#media_urls h1').hide();
+      }
+
+      var socket = io();
+
+      socket.on('connected', function(socket) {
+        console.log("Connected!");
+      });
+
+      socket.on('news', function(url){
+          console.log("Adding new media...");
+          var markup = createImage(url);
+          $('#media_urls').prepend(markup);
+          window.setTimeout(startGallery, 500);
+      });
+
+      $(document).ready(function() {
+        //$('#media_urls').photobox('a', {autoplay: true, loop: true});
+      });
+    </script>
+  </body>
+</html>
