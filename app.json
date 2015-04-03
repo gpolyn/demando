@@ -1,6 +1,6 @@
 
 {
-    "name": "Twilio, Twitter Photo and Message Stream",
+    "name": "Social Media Stream Handler",
     "description": "A Node.js app that receives Twilio MMS and Twitter messages and displays photos and text in realtime.",
     "keywords": [
         "twilio",
