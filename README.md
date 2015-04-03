@@ -8,7 +8,7 @@
 
 Use the handy Deploy to Heroku button:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/RobSpectre/Realtime-MMS-Photostream)
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/gpolyn/demando)
 
 ## Meta
 
